@@ -48,7 +48,7 @@ app.post('/playlist',(req,res)=>{
 	}
 	if(req.body.nextPageToken)
 	{
-		url += '&pageToken=' + body.nextPageToken;
+		url += '&pageToken=' + req.body.nextPageToken;
 	}
 	request(url,{json:true},(err,res1,body)=>{
 		if(err)
