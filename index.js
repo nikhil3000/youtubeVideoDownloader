@@ -29,7 +29,7 @@ app.get('/playlist',(req,res)=>{
 app.post('/playlist',(req,res)=>{
 	var list = [] ;
 	var str = req.body.url;
-	var url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&fields=items%2FcontentDetails%2FvideoId%2CnextPageToken&key=AIzaSyDiTRk48jlGum6eMNZWCiAG3kWTQivg1vg'
+	var url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet%2CContentDetails&maxResults=50&fields=items(contentDetails%2FvideoId%2Csnippet%2Fposition)%2CnextPageToken&key=AIzaSyDiTRk48jlGum6eMNZWCiAG3kWTQivg1vg'
 	for(var i=0;i<str.length;i++)
 	{
 		if(str.charAt(i) == '=')
@@ -67,11 +67,12 @@ app.post('/playlist',(req,res)=>{
 		{
 			// console.log(i);
 			// console.log(baseURL + list[i]);
-			playlist(baseURL + list[i]);
+			playlist(baseURL + list[i],body.items[i].snippet.position + 1);
 		}
 		if(body.nextPageToken)
 		{
-			res.send('Please use this nextPageToken to download rest of videos of this playlist' +body.nextPageToken);
+			res.render('playlist',{url:req.body.url,nextPageToken:body.nextPageToken});
+			// res.send('Please use this nextPageToken to download rest of videos of this playlist' +body.nextPageToken);
 		}
 		else
 		{
@@ -100,9 +101,8 @@ app.listen(port,(err=>{
 }))
 
 
-function playlist(url) {
+function playlist(url,index) {
 
-	console.log('hello');
 	'use strict';
 	var video = ytdl(url);
   // console.log(video);
@@ -116,14 +116,13 @@ function playlist(url) {
   var title;
   video.on('info', function(info) {
     // console.log(info);
-    ginfo = info;
     size = info.size;
     var dir = __dirname + '/ytd';
     console.log(dir);
     if (!fs.existsSync(dir))
     	fs.mkdirSync(dir);
     var title = info.title;
-    output = path.join(dir, info.title + '.mp4');
+    output = path.join(dir, index + ' ' + info.title + '.mp4');
     video.pipe(fs.createWriteStream(output));
 });
 

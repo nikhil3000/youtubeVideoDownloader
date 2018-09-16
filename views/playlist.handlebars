@@ -3,12 +3,12 @@
 	<form action="/playlist" method="post">
 		<div class="form-group">
 			<label for="Playlist URL">Playlist URL</label>
-			<input type="text" name="url" class="form-control">
+			<input type="text" name="url"  class="form-control" value={{url}}>
 		</div>
 		<p>You can only download 50 videos at a time. In case there are more than 50 videos in your playlist a page token will be given to you at the end of this request. Please use it to download the next 50 videos of your playllist.</p>
 		<div class="form-group">
 			<label for="qr">Page Token</label>
-			<input type="text" name="nextPageToken" class="form-control">
+			<input type="text" name="nextPageToken" class="form-control" value={{nextPageToken}}>
 		</div>
 		<button type="submit" class="btn btn-primary">Download</button>
 	</form>
