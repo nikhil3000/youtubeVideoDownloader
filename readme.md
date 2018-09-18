@@ -1,6 +1,6 @@
 # NodeJs project to Download Youtube videos and playlist using [youtube-dl](https://www.npmjs.com/package/youtube-dl) module.
 
-Update: After latest push, playlist videos will be numbered automatically. 
+Update: After latest push, playlist videos will be numbered automatically and next token will be read programitically.
 
 **System Requirements**
 
